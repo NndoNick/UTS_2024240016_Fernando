@@ -1,0 +1,67 @@
+<!-- Nama :  Fernando -->
+<!-- NPM : 2024240016 -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulasi Pembayaran THR</title>
+  </head>
+  <body>
+    <h2>Simulasi Pembayaran THR</h2>
+    <label for="gajiPokok">Gaji Pokok:</label>
+    <input type="number" id="gajiPokok" placeholder="gaji" /><br /><br />
+    <label for="tunjangan">Tunjangan Tetap:</label>
+    <input type="number" id="tunjangan" placeholder="tunjangan" /><br /><br />
+    <label for="masaKerja">Masa Kerja (bulan):</label>
+    <input type="number" id="masaKerja" placeholder="masa kerja" /><br /><br />
+    <button onclick="hitungTHR()">Hitung THR</button><br /><br />
+    <p id="output"></p>
+
+    <script>
+      function hitungTHR() {
+        const gajiPokok = parseFloat(
+          document.getElementById("gajiPokok").value
+        );
+        const tunjangan = parseFloat(
+          document.getElementById("tunjangan").value
+        );
+        const masaKerja = parseInt(document.getElementById("masaKerja").value);
+        let output = "";
+
+        // Menghitung Total Gaji
+        const totalGaji = gajiPokok + tunjangan;
+
+        // Menghitung THR
+        let THR;
+        if (masaKerja >= 12) {
+          THR = totalGaji;
+        } else {
+          THR = (masaKerja / 12) * totalGaji;
+        }
+
+        // Menghitung PPH
+        const ptkp = 4500000; // PTKP
+        const pphRate = 0.05;
+        const totalPendapatan = totalGaji * 12;
+        let pph = 0;
+        if (totalPendapatan > ptkp) {
+          pph = (totalPendapatan - ptkp) * pphRate;
+        }
+
+        // Menghitung Total Pembayaran
+        const totalPembayaran = THR + pph;
+
+        // Output
+        output += "Total Gaji: Rp " + totalGaji.toLocaleString() + "<br>";
+        output += "THR: Rp " + THR.toLocaleString() + "<br>";
+        output += "PPH: Rp " + pph.toLocaleString() + "<br>";
+        output +=
+          "Total Pembayaran: Rp " + totalPembayaran.toLocaleString() + "<br>";
+
+        document.getElementById("output").innerHTML = output;
+      }
+    </script>
+  </body>
+</html>
